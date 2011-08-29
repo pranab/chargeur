@@ -4,6 +4,22 @@ Introduction
 Cargeur is a simple CSV file loader for Hbase and Cassandra. HBase is fully supported now. Will add
 Cassandra support. A JSON config file defines metadta mapping between csv and NOSQL table, column family etc.
 
+Mapping
+=======
+A csv column can be mapped to one or more NOSQL db column. For mapping to mutiple columns, the installed 
+preLoadHandler is supposed to split a CSV column into mutiple parts. Also multipkle csv columns could be 
+mapped to one NOSQL db column.
+
+Some of the coulns can be designated as part of the row key. All columns designated as part of row key
+are concatanated to create NOSQL db row key.
+
+One or more columns with constant value can be injected by passing a Map<String,String> to the API. These
+data elements are designated as sideData
+
+API
+===
+The load() method in the Loader class is the entry point to the API
+
 Configuration
 =============
 
