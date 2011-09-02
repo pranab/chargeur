@@ -11,6 +11,7 @@ public class ColumnMapper {
 	private int maxSize;
 	private boolean sideData = false;
 	private String defaultValue;
+	private boolean indexed;
 	
 	public String getName() {
 		return name;
@@ -65,6 +66,12 @@ public class ColumnMapper {
 	}
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+	public boolean isIndexed() {
+		return indexed;
+	}
+	public void setIndexed(boolean indexed) {
+		this.indexed = indexed;
 	}
 	
 	

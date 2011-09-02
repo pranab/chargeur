@@ -31,6 +31,7 @@ public class SpreadSheetMapper {
 	private List<String> rowKey;
 	private int batchSize;
 	private String preLoadHandler;
+	private String indexManager;
 	private List<ColumnMapper> columnMappers;    
 	private static SpreadSheetMapper configurator;
 
@@ -118,5 +119,13 @@ public class SpreadSheetMapper {
 			}
 		}
 		return colMappers;
+	}
+
+	public String getIndexManager() {
+		return indexManager;
+	}
+
+	public void setIndexManager(String indexManager) {
+		this.indexManager = indexManager;
 	}
 }

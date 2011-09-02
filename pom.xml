@@ -69,14 +69,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             </exclusions>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.cloudera.hadoop</groupId>
-            <artifactId>hadoop-core</artifactId>
-            <version>${hadoop.version}</version>
-        </dependency>
-		-->
-        
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase</artifactId>
@@ -102,6 +94,35 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <artifactId>jackson-mapper-lgpl </artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+		<dependency>
+           <artifactId>solr-core</artifactId>
+           <groupId>org.apache.solr</groupId>
+           <version>3.3.0</version>
+           <type>jar</type>
+           <scope>compile</scope>
+        </dependency>
+
+		<dependency>
+           <artifactId>solr-solrj</artifactId>
+           <groupId>org.apache.solr</groupId>
+           <version>3.3.0</version>
+           <type>jar</type>
+           <scope>compile</scope>
+        </dependency>
+
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.5.6</version>
+        </dependency>  
+
+      	<dependency>
+    		<groupId>commons-httpclient</groupId>
+    		<artifactId>commons-httpclient</artifactId>
+    		<version>3.1</version>
+		</dependency>  
+
         <dependency>
         	<groupId>commons-logging</groupId>
         	<artifactId>commons-logging-api</artifactId>

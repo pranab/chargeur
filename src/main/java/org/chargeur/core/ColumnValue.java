@@ -26,6 +26,7 @@ public class ColumnValue {
 	private String value;
 	private String dataType;
 	private int maxSize;
+	private boolean indexed;
 	
 	public ColumnValue(ColumnMapper colMapper, String value){
 		colFamily = colMapper.getColFamily();
@@ -43,6 +44,7 @@ public class ColumnValue {
 			maxSize = Bytes.SIZEOF_DOUBLE;
 		}
 		this.value = value;
+		this.indexed = colMapper.isIndexed();
 	}
 	
 	public String getColFamily() {
@@ -121,5 +123,13 @@ public class ColumnValue {
 	
 	public void appendValue(String newValue){
 		value = value + " " + newValue;
+	}
+
+	public boolean isIndexed() {
+		return indexed;
+	}
+
+	public void setIndexed(boolean indexed) {
+		this.indexed = indexed;
 	}
 }

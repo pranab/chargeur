@@ -40,19 +40,31 @@ import org.chargeur.handler.PreLoadHandler;
 public class Loader {
 	private SpreadSheetMapper configurator;
 	private PreLoadHandler handler;
+	private IndexManager indexManager;
 	
 	public void load(String csvFile, String mappingFile, Map<String, String> sideData){
 		try {
 			SpreadSheetMapper.initialize(mappingFile);
 			configurator = SpreadSheetMapper.instance();
+			
+			//create loader object
 			DbLoader dbLoader = createDbLoader();
 			
+			//create pre load handler object
 			String preLoadHandler = configurator.getPreLoadHandler();
 			handler = null;
 			if (null != preLoadHandler){
-	            Class<?> handlerCls = Class.forName(configurator.getPreLoadHandler());
+	            Class<?> handlerCls = Class.forName(preLoadHandler);
 	            handler = (PreLoadHandler)handlerCls.newInstance();
 			}
+			
+			//create index manager object
+			String indexManagerClass = configurator.getIndexManager();
+			if (null != indexManagerClass) {
+	            Class<?> indexManCls = Class.forName(indexManagerClass);
+	            indexManager = (IndexManager)indexManCls.newInstance();
+			}
+			
 			List<ColumnValue> columns = new ArrayList<ColumnValue>();
 			Map<String, ColumnValue> rowComponents = new HashMap<String, ColumnValue>();
 			
@@ -105,8 +117,15 @@ public class Loader {
 					}
 				}
 				
+				//load this row
 				rowKeyValues = getRowKeyItems(rowComponents);
 				dbLoader.load(rowKeyValues, columns);
+				
+				//create index
+				if (null != indexManager){
+					indexManager.createIndex(rowKeyValues, columns);
+				}
+				
                 ++count;
 				System.out.println("Loaded row: " + count);
 				
