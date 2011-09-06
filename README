@@ -20,10 +20,15 @@ API
 ===
 The load() method in the Loader class is the entry point to the API
 
+Solr Indexing
+=============
+Data can optionally be indexed with Solr. All attributes with indexed flag set are indexed. 
+
 Configuration
 =============
 
-Here is a sample configuration for loading product data from csv to a HBase table
+Here is a sample configuration for loading product data from csv to a HBase table while being indexed
+with Solr
 
 {
 	"name" : "product catalog",
@@ -31,8 +36,10 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 	"table" : "products",
 	"colNameInFirstRow" : true,
 	"rowKey" : ["seller", "category", "sku"],
-	"batchSize" : 10,
+	"batchSize" : 5,
 	"preLoadHandler" : "org.chargeur.handler.ProductPreLoadHandler",
+    "indexManagerClass" : "org.chargeur.core.SolrIndexManager",
+    "indexServerUrl" : "http://localhost:8983/solr",
 	"columnMappers" : 
 	[
 		{
@@ -43,7 +50,8 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"col" : "sku",
 			"useAsRowKey" : true,
 			"maxSize" : 20,
-			"sideData" : false
+			"sideData" : false,
+            "indexed" : true
 		},
 		{
 			"name" : "seller",
@@ -54,7 +62,8 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"useAsRowKey" : true,
 			"maxSize" : 30,
 			"sideData" : true,
-			"defaultValue" : "anySeller"
+			"defaultValue" : "anySeller",
+            "indexed" : true
 		},
 		{
 			"name" : "model",
@@ -72,7 +81,8 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"colFamily" : "main",
 			"col" : "title",
 			"useAsRowKey" : false,
-			"sideData" : false
+			"sideData" : false,
+            "indexed" : true
 		},
 		{
 			"name" : "description",
@@ -81,7 +91,8 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"colFamily" : "main",
 			"col" : "description",
 			"useAsRowKey" : false,
-			"sideData" : false
+			"sideData" : false,
+            "indexed" : true
 		},
 		{
 			"name" : "category",
@@ -92,7 +103,8 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"useAsRowKey" : true,
 			"maxSize" : 30,
 			"sideData" : false,
-			"defaultValue" : "generic"
+			"defaultValue" : "generic",
+            "indexed" : true
 		},
 		{
 			"name" : "price",
@@ -104,14 +116,48 @@ Here is a sample configuration for loading product data from csv to a HBase tabl
 			"name" : "details1",
 			"ordinal" : 6,
 			"colFamily" : "other",
-			"col" : "details"
+			"col" : "details",
+			"manyToOne" : true,
+            "indexed" : true
 		},
 		{
 			"name" : "details2",
 			"ordinal" : 7,
 			"colFamily" : "other",
-			"col" : "details"
+			"col" : "details",
+ 			"manyToOne" : true,
+            "indexed" : true
 		},
-......
+		{
+			"name" : "details3",
+			"ordinal" : 8,
+			"colFamily" : "other",
+			"col" : "details",
+			"manyToOne" : true,
+            "indexed" : true
+		},
+		{
+			"name" : "details4",
+			"ordinal" : 9,
+			"colFamily" : "other",
+			"col" : "details",
+			"manyToOne" : true,
+            "indexed" : true
+		},
+		................
+		{
+			"name" : "image1",
+			"ordinal" : 19,
+			"colFamily" : "other",
+			"col" : "images"
+		},
+		{
+			"name" : "image2",
+			"ordinal" : 20,
+			"colFamily" : "other",
+			"col" : "images"
+		},
+		...............
+
 	]
 }
