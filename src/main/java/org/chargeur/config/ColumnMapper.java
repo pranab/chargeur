@@ -11,6 +11,7 @@ public class ColumnMapper {
 	private int maxSize;
 	private boolean sideData = false;
 	private String defaultValue;
+	private boolean manyToOne;
 	private boolean indexed;
 	
 	public String getName() {
@@ -66,6 +67,12 @@ public class ColumnMapper {
 	}
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+	public boolean isManyToOne() {
+		return manyToOne;
+	}
+	public void setManyToOne(boolean manyToOne) {
+		this.manyToOne = manyToOne;
 	}
 	public boolean isIndexed() {
 		return indexed;

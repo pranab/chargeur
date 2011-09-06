@@ -21,6 +21,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.chargeur.config.ColumnMapper;
 
 public class ColumnValue {
+	private String name;
 	private String colFamily;
 	private String col;
 	private String value;
@@ -29,6 +30,12 @@ public class ColumnValue {
 	private boolean indexed;
 	
 	public ColumnValue(ColumnMapper colMapper, String value){
+		if (colMapper.isManyToOne()){
+			name = colMapper.getCol();
+		} else {
+			name = colMapper.getName();
+		}
+		
 		colFamily = colMapper.getColFamily();
 		col = colMapper.getCol();
 		dataType = colMapper.getDataType();
@@ -47,6 +54,14 @@ public class ColumnValue {
 		this.indexed = colMapper.isIndexed();
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getColFamily() {
 		return colFamily;
 	}
@@ -121,6 +136,19 @@ public class ColumnValue {
 		return bytes;
 	}
 	
+	public Object getTypedValue() {
+		Object typedValue = null;
+		
+		if (dataType.equals("string")) {
+			typedValue = value;
+		} else if (dataType.equals("long")) { 
+			typedValue = new Long(value);
+		} else if (dataType.equals("double")) {
+			typedValue = new Double(value);
+		}
+		return typedValue;
+	}
+
 	public void appendValue(String newValue){
 		value = value + " " + newValue;
 	}

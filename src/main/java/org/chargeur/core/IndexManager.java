@@ -23,4 +23,6 @@ public interface IndexManager {
 	
 	public void createIndex(List<ColumnValue> rowKeyValues, List<ColumnValue> columns) throws Exception;
 	
+	public void close() throws Exception;
+	
 }

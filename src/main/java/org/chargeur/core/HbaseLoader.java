@@ -58,12 +58,17 @@ public class HbaseLoader implements DbLoader {
 		
 		if (rowCount % batchSize == 0){
 			table.flushCommits();
+			System.out.println("table flushed");
 		}
 	}
 	
 	public void close() throws Exception {
-		table.flushCommits();
+		if (rowCount % batchSize != 0){
+			table.flushCommits();
+			System.out.println("table flushed");
+		}
 		table.close();
+		System.out.println("table closed");
 	}
 
 	public int getRowCount() {

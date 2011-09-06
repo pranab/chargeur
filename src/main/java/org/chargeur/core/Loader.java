@@ -59,7 +59,7 @@ public class Loader {
 			}
 			
 			//create index manager object
-			String indexManagerClass = configurator.getIndexManager();
+			String indexManagerClass = configurator.getIndexManagerClass();
 			if (null != indexManagerClass) {
 	            Class<?> indexManCls = Class.forName(indexManagerClass);
 	            indexManager = (IndexManager)indexManCls.newInstance();
@@ -100,7 +100,7 @@ public class Loader {
 				
 				for (int i = 0; i < items.length; ++i){
 					String value = items[i];
-					System.out.println("processing column: " + (i+1) + "  " + value);
+					//System.out.println("processing column: " + (i+1) + "  " + value);
 					List<ColumnMapper> colMappers = configurator.getColumnMapper(i+1);
 					for (ColumnMapper colMapper : colMappers){
 						createColumnValue(value, colMapper,  columns, rowComponents);
@@ -112,27 +112,33 @@ public class Loader {
 				for (ColumnMapper colMapper : colMappersSideData){
 					String value = sideData.get(colMapper.getName());
 					if (null != value){
-						System.out.println("processing side data: " + colMapper.getName());
+						//System.out.println("processing side data: " + colMapper.getName());
 						createColumnValue(value, colMapper,  columns, rowComponents);
 					}
 				}
 				
+				
+				
 				//load this row
+	            ++count;
 				rowKeyValues = getRowKeyItems(rowComponents);
 				dbLoader.load(rowKeyValues, columns);
+				System.out.println("Loaded row: " + count);
 				
 				//create index
 				if (null != indexManager){
 					indexManager.createIndex(rowKeyValues, columns);
+					System.out.println("Indexed row: " + count);
 				}
-				
-                ++count;
-				System.out.println("Loaded row: " + count);
-				
+ 				
 			}
 			
 			in.close();			
 			dbLoader.close();
+			
+			if (null != indexManager){
+				indexManager.close();
+			}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -181,9 +187,11 @@ public class Loader {
 	private void createColumnValue(String value, ColumnMapper colMapper, List<ColumnValue> columns, Map<String, ColumnValue> rowComponents){
 		String processedValue = handler != null ? handler.process(colMapper, value) : value;
 		
+		boolean exists = false;
 		ColumnValue colValue = findColumnValue(columns, colMapper);
 		if (null != colValue){
 			colValue.appendValue(processedValue);
+			exists = true;
 		} else {
 			colValue = new ColumnValue(colMapper, processedValue);
 		}
@@ -192,7 +200,9 @@ public class Loader {
 			rowComponents.put(colMapper.getName(), colValue);
 			System.out.println("row key: " + colMapper.getName() + " " + colValue.getValue());
 		} else {
-			columns.add(colValue);
+			if (!exists){
+				columns.add(colValue);
+			}
 		}
 	}
 
