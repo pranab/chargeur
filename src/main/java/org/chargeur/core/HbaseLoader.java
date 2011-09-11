@@ -75,7 +75,7 @@ public class HbaseLoader implements DbLoader {
 		return rowCount;
 	}
 	
-	private byte[] createRowKey(List<ColumnValue> rowKeyValues) {
+	public static  byte[] createRowKey(List<ColumnValue> rowKeyValues) {
 		byte[] rowKey = null;
 		int size = 0;
 		for (ColumnValue colVal : rowKeyValues){

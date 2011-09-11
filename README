@@ -126,7 +126,7 @@ with Solr
 			"colFamily" : "other",
 			"col" : "details",
  			"manyToOne" : true,
-            "indexed" : true
+			"indexed" : true
 		},
 		{
 			"name" : "details3",

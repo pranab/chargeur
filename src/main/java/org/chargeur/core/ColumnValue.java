@@ -104,7 +104,7 @@ public class ColumnValue {
 	public byte[] getValueBytes() {
 		byte[] bytes = null;
 		
-		if (dataType.equals("string")) {
+		if (dataType.equals("string") || dataType.equals("text")) {
 			bytes = Bytes.toBytes(value);
 		} else if (dataType.equals("long")) { 
 			long lValue = new Long(value);
@@ -119,7 +119,7 @@ public class ColumnValue {
 	public byte[] getValueBytesMax() {
 		byte[] bytes = null;
 		
-		if (dataType.equals("string")) {
+		if (dataType.equals("string") || dataType.equals("text")) {
 			byte[] stBytes = Bytes.toBytes(value);
 			if (stBytes.length < maxSize){
 				bytes = Bytes.padTail(stBytes, maxSize - stBytes.length);
@@ -139,7 +139,7 @@ public class ColumnValue {
 	public Object getTypedValue() {
 		Object typedValue = null;
 		
-		if (dataType.equals("string")) {
+		if (dataType.equals("string") || dataType.equals("text")) {
 			typedValue = value;
 		} else if (dataType.equals("long")) { 
 			typedValue = new Long(value);

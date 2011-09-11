@@ -30,7 +30,7 @@ public class SolrIndexManager implements IndexManager {
 	private int batchSize;
 	private int docCount;
 	private Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
-	private static final String idDelim = "[]";
+	private static final String idDelim = "$$";
 	private static final String idFieldName = "id";
 
 	public SolrIndexManager()  throws Exception {
@@ -45,10 +45,18 @@ public class SolrIndexManager implements IndexManager {
 
 		String id = createDocId(rowKeyValues);
 		doc.addField(idFieldName, id);
+
+		for (ColumnValue colVal : rowKeyValues){
+			if (colVal.isIndexed()){
+				doc.addField(colVal.getName(), colVal.getTypedValue());
+				//System.out.println("indexing " + colVal.getName() + " " + colVal.getTypedValue());
+			}
+		}
 		
 		for (ColumnValue colVal : columns){
 			if (colVal.isIndexed()){
 				doc.addField(colVal.getName(), colVal.getTypedValue());
+				//System.out.println("indexing " + colVal.getName() + " " + colVal.getTypedValue());
 			}
 		}
 		

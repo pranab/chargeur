@@ -111,6 +111,18 @@ public class SpreadSheetMapper {
 		return colMappers;
 	}
 
+	public ColumnMapper getColumnMapperFromName(String name){
+		ColumnMapper colMapper = new ColumnMapper();
+		
+		for (ColumnMapper thisColMapper : columnMappers){
+			if (thisColMapper.getName().equals(name)){
+				colMapper = thisColMapper;
+				break;
+			}
+		}
+		return colMapper;
+	}
+
 	public List<ColumnMapper> getColumnMapperForSideData(){
 		List<ColumnMapper> colMappers = new ArrayList<ColumnMapper>();
 		

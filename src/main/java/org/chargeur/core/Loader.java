@@ -100,6 +100,8 @@ public class Loader {
 				
 				for (int i = 0; i < items.length; ++i){
 					String value = items[i];
+					value = value.trim();
+					
 					//System.out.println("processing column: " + (i+1) + "  " + value);
 					List<ColumnMapper> colMappers = configurator.getColumnMapper(i+1);
 					for (ColumnMapper colMapper : colMappers){

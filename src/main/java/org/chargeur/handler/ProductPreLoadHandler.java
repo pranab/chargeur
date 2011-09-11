@@ -36,7 +36,7 @@ public class ProductPreLoadHandler implements PreLoadHandler {
 				}
 			}
 		}
-		return colValue;
+		return colValue.trim();
 		
 	}
 
