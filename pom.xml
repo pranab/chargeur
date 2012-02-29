@@ -18,8 +18,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             </activation>
             <properties>
                 <log4j.version>1.2.16</log4j.version>
-                <hadoop.version>0.20.2-737</hadoop.version>
-				<hbase.version>0.90.3-cdh3u1</hbase.version>
+                <hadoop.version>0.20.2-cdh3u2</hadoop.version>
+				<hbase.version>0.90.4-cdh3u3 </hbase.version>
                 <jackson.version>1.6.3</jackson.version>
                 <jdk.level>1.6</jdk.level>
             </properties>
@@ -36,6 +36,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                 <version>2.3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -44,6 +45,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+ 				<version>2.3.1</version>
                 <configuration>
                     <archive>
                     </archive>
@@ -140,6 +142,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>
+        <repository>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>cloudera-releases</id>
+          <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
     </repositories>
 </project>
