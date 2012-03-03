@@ -1,0 +1,134 @@
+{
+	"name" : "product catalog",
+	"database" : "hbase",
+	"table" : "products",
+	"colNameInFirstRow" : true,
+	"rowKey" : ["seller", "category", "sku"],
+	"batchSize" : 5,
+	"preLoadHandler" : "org.chargeur.handler.ProductPreLoadHandler",
+	"indexManagerClass" : "org.chargeur.core.SolrIndexManager",
+	"indexServerUrl" : "http://localhost:8983/solr",
+	"columnMappers" : 
+	[
+		{
+			"name" : "sku",
+			"ordinal" : 1,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "sku",
+			"useAsRowKey" : true,
+			"maxSize" : 20,
+			"sideData" : false,
+			"indexed" : true
+		},
+		{
+			"name" : "seller",
+			"ordinal" : 0,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "seller",
+			"useAsRowKey" : true,
+			"maxSize" : 30,
+			"sideData" : true,
+			"defaultValue" : "anySeller",
+			"indexed" : true
+		},
+		{
+			"name" : "model",
+			"ordinal" : 3,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "model",
+			"useAsRowKey"  : false,
+			"sideData" : false
+		},
+		{
+			"name" : "title",
+			"ordinal" : 4,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "title",
+			"useAsRowKey" : false,
+			"sideData" : false,
+			"indexed" : true
+		},
+		{
+			"name" : "description",
+			"ordinal" : 5,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "description",
+			"useAsRowKey" : false,
+			"sideData" : false,
+			"indexed" : true
+		},
+		{
+			"name" : "category",
+			"ordinal" : 4,
+			"dataType" : "string",
+			"colFamily" : "main",
+			"col" : "category",
+			"useAsRowKey" : true,
+			"maxSize" : 30,
+			"sideData" : false,
+			"defaultValue" : "generic",
+			"indexed" : true
+		},
+		{
+			"name" : "price",
+			"ordinal" : 17,
+			"colFamily" : "main",
+			"col" : "price"
+		},
+		{
+			"name" : "details1",
+			"ordinal" : 6,
+			"colFamily" : "other",
+			"col" : "details",
+			"manyToOne" : true,
+			"indexed" : true
+		},
+		{
+			"name" : "details2",
+			"ordinal" : 7,
+			"colFamily" : "other",
+			"col" : "details",
+ 			"manyToOne" : true,
+			"indexed" : true
+		},
+		{
+			"name" : "details3",
+			"ordinal" : 8,
+			"colFamily" : "other",
+			"col" : "details",
+			"manyToOne" : true,
+			"indexed" : true
+		},
+		{
+			"name" : "details4",
+			"ordinal" : 9,
+			"colFamily" : "other",
+			"col" : "details",
+			"manyToOne" : true,
+			"indexed" : true
+		},
+		................
+		{
+			"name" : "image1",
+			"ordinal" : 19,
+			"colFamily" : "other",
+			"col" : "images"
+		},
+		{
+			"name" : "image2",
+			"ordinal" : 20,
+			"colFamily" : "other",
+			"col" : "images"
+		},
+		...............
+
+	]
+}
+
+
+
