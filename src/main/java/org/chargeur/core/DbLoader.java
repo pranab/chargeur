@@ -40,10 +40,9 @@ public abstract class DbLoader {
 		rowKey = new byte[size];
 		int tgtOffset = 0;
 		for (ColumnValue colVal : rowKeyValues){
-			int srcLength = colVal.getMaxSize();
+			int srcLength = colVal.getSize(paddedString);
 			byte[] srcBytes = paddedString ? colVal.getValueBytesMax() : colVal.getValueBytes();
-			Bytes.putBytes(rowKey, tgtOffset, srcBytes, 0, srcLength);
-			tgtOffset += srcLength;
+			tgtOffset = Bytes.putBytes(rowKey, tgtOffset, srcBytes, 0, srcLength);
 		}
 		
 		return rowKey;

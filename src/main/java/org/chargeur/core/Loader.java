@@ -119,8 +119,6 @@ public class Loader {
 					}
 				}
 				
-				
-				
 				//load this row
 	            ++count;
 				rowKeyValues = getRowKeyItems(rowComponents);
@@ -154,7 +152,9 @@ public class Loader {
 		
 		if (configurator.getDatabase().equals("hbase")){
 			dbLoader = new HbaseLoader(configurator.getTable(), configurator.getBatchSize());
-		}
+		} else if (configurator.getDatabase().equals("cassandra")){
+			dbLoader = new CassandraLoader(configurator.getDbConfigFile(), configurator.getTable(), configurator.getBatchSize());
+		} 
 		
 		return dbLoader;
 	}

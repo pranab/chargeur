@@ -26,7 +26,6 @@ import java.util.Map;
 import org.apache.cassandra.thrift.ConsistencyLevel;
 
 import agiato.cassandra.data.BatchLoader;
-import agiato.cassandra.data.DataAccess;
 import agiato.cassandra.data.DataManager;
 import agiato.cassandra.data.SuperColumnValue;
 import agiato.cassandra.data.SuperRow;
@@ -49,6 +48,7 @@ public class CassandraLoader extends DbLoader {
 		 Map<String, SuperColumnValue> superColsMap = new HashMap<String, SuperColumnValue>();
 		 
 		 for (ColumnValue colVal : columns ) {
+			 //super col name and value
 			 String supCol  = colVal.getColFamily();
 			 SuperColumnValue supColVal = superColsMap.get(supCol);
 			 if (null == supColVal) {
@@ -63,11 +63,12 @@ public class CassandraLoader extends DbLoader {
 			 supColVal.addValue(caColVal);
 		 }
 		 
+		 //create super col list and row
 		 for (String name : superColsMap.keySet()) {
 			 superColValues.add(superColsMap.get(name));
 		 }
-		 
 		SuperRow superRow = new  SuperRow(rowKey, superColValues);
+
 		batchLoader.addRow(rowKey, superColValues);
 	}
 

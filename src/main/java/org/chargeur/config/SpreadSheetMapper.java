@@ -26,6 +26,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class SpreadSheetMapper {
 	private String name;
 	private String database;
+	private String dbConfigFile;
 	private String table;
 	private boolean colNameInFirstRow;
 	private List<String> rowKey;
@@ -57,6 +58,14 @@ public class SpreadSheetMapper {
 	public void setDatabase(String database) {
 		this.database = database;
 	}
+	public String getDbConfigFile() {
+		return dbConfigFile;
+	}
+
+	public void setDbConfigFile(String dbConfigFile) {
+		this.dbConfigFile = dbConfigFile;
+	}
+
 	public String getTable() {
 		return table;
 	}
