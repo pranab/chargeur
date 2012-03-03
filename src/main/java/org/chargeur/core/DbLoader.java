@@ -17,14 +17,36 @@
 
 package org.chargeur.core;
 
+
 import java.util.List;
 
-public interface DbLoader {
+import org.apache.hadoop.hbase.util.Bytes;
+
+public abstract class DbLoader {
 
 	public abstract void load(List<ColumnValue> rowKeyValues, List<ColumnValue> columns) throws Exception;
 	
 	public abstract void close() throws Exception;
 	
 	public abstract int getRowCount();
+	
+	protected   byte[] getCompositeKeyBytes(List<ColumnValue> rowKeyValues, boolean paddedString) {
+		byte[] rowKey = null;
+		int size = 0;
+		for (ColumnValue colVal : rowKeyValues){
+			size += colVal.getSize(paddedString);
+		}
+
+		rowKey = new byte[size];
+		int tgtOffset = 0;
+		for (ColumnValue colVal : rowKeyValues){
+			int srcLength = colVal.getMaxSize();
+			byte[] srcBytes = paddedString ? colVal.getValueBytesMax() : colVal.getValueBytes();
+			Bytes.putBytes(rowKey, tgtOffset, srcBytes, 0, srcLength);
+			tgtOffset += srcLength;
+		}
+		
+		return rowKey;
+	}
 
 }

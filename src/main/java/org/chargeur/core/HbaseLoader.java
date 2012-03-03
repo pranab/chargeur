@@ -27,7 +27,7 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class HbaseLoader implements DbLoader {
+public class HbaseLoader extends  DbLoader {
 	private Configuration conf;
 	private HTable table;
 	private int batchSize;
@@ -84,11 +84,15 @@ public class HbaseLoader implements DbLoader {
 
 		rowKey = new byte[size];
 		int tgtOffset = 0;
+		boolean isAllString = true;
 		for (ColumnValue colVal : rowKeyValues){
 			int srcLength = colVal.getMaxSize();
 			byte[] srcBytes = colVal.getValueBytesMax();
 			Bytes.putBytes(rowKey, tgtOffset, srcBytes, 0, srcLength);
 			tgtOffset += srcLength;
+			if (!colVal.getDataType().equals("string")) {
+				isAllString = false;
+			}
 		}
 		
 		return rowKey;

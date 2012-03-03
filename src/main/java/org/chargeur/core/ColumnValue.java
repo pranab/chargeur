@@ -160,4 +160,16 @@ public class ColumnValue {
 	public void setIndexed(boolean indexed) {
 		this.indexed = indexed;
 	}
+	
+	public int getSize(boolean getMax) {
+		int size = 0;
+		if (dataType.equals("string") || dataType.equals("text")) {
+			size = getMax ? maxSize  :  value.length();
+		} else if (dataType.equals("long")) { 
+			size = Bytes.SIZEOF_LONG;
+		} else if (dataType.equals("double")) {
+			size = Bytes.SIZEOF_DOUBLE;
+		}
+		return size;
+	}
 }
